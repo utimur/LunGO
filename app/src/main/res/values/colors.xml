@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#DE233C</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="lungoText">#DA316F</color>
+    <color name="lungo_start">#D11C3F</color>
+    <color name="lungo_end">#E95295</color>
+    <color name="lungoTextDark">#B0B0B0</color>
+    <color name="white">#FEFEFE</color>
+    <color name="black">#000000</color>
+    <color name="dark_white">#FAFAFA</color>
+    <color name="my_msg">#D4D4D4</color>
+    <color name="msg_text">#333333</color>
+</resources>

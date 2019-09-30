@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="90dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/new_name_pass"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".ChangeGroupNameActivity">
+
+    <EditText
+        android:id="@+id/change_group_name_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:hint="Введите новое имя"
+        android:inputType="textPersonName"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp" />
+
+    <Button
+        android:id="@+id/change_group_name_button"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:alpha="0" />
+    </LinearLayout>

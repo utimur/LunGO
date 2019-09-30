@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/new_group_chat"
+    tools:context=".NewGroupContactActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/new_group_search_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:paddingLeft="16dp"
+            android:paddingTop="6dp"
+            android:textSize="18sp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Введите имя пользователя"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/new_group_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/new_group_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="114dp"
+        android:layout_marginStart="328dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="center"
+        app:fabSize="normal"
+        android:clickable="true"
+        app:maxImageSize="56dp"
+        app:backgroundTint="@color/colorAccent"
+        app:rippleColor="@color/colorPrimaryDark"
+        app:backgroundTintMode="multiply"
+        app:hideMotionSpec="@android:anim/fade_in"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+        app:layout_constraintHorizontal_bias="0.111"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/button_go" />
+</android.support.constraint.ConstraintLayout>

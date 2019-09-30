@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/change_name_layout"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/sett">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:text="Сменить имя пользователя"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/name" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/change_pass_layout"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/sett">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Сменить пароль"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/change_pass_iv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.666" />
+
+        <ImageView
+            android:id="@+id/change_pass_iv"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/password" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/change_style_layout"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/sett">
+
+        <TextView
+            android:id="@+id/textChangeStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Выбрать стиль"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/change_Image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/change_Image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/style" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/private_settings"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/sett">
+
+        <TextView
+            android:id="@+id/private_setting_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Приватность"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/private_settings_iv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/private_settings_iv"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/private_logo" />
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

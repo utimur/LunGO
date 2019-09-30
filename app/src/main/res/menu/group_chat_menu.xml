@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/add_contact_group_chat_item"
+        android:title="Добавить участника" />
+    <item
+        android:id="@+id/change_group_item_name"
+        android:title="Изменить название" />
+    <item
+        android:id="@+id/show_group_info_item"
+        android:title="Посмотреть сведения" />
+    <item
+        android:id="@+id/leave_group_item"
+        android:title="Покинуть беседу" />
+</menu>

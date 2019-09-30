@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/chats_reg_phone"
+    tools:context=".MainActivity">
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="center"
+        android:src="@mipmap/fab"
+        app:backgroundTint="@color/colorAccent"
+        app:backgroundTintMode="multiply"
+        app:fabSize="normal"
+        app:hideMotionSpec="@android:anim/fade_in"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:maxImageSize="56dp"
+        app:rippleColor="@color/colorPrimaryDark" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/high_main_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_main_panel"
+                android:layout_width="match_parent"
+                android:layout_height="87dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/avatarImageView"
+                    android:layout_width="67dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.008"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/default_avatar" />
+
+                <TextView
+                    android:id="@+id/my_user_nickname_label"
+                    android:layout_width="190dp"
+                    android:layout_height="27dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="42dp"
+                    android:text="TextView"
+                    android:textColor="#DA316F"
+                    android:textSize="20dp"
+                    android:typeface="normal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.638"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <EditText
+                    android:id="@+id/ET_search_contact"
+                    android:layout_width="142dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/ET_search_contact"
+                    android:inputType="text"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.482"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/my_user_nickname_label"
+                    app:layout_constraintVertical_bias="0.222" />
+
+
+                <TextView
+                    android:id="@+id/my_user_status_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="4dp"
+                    android:alpha="0"
+                    android:shadowColor="#333333"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="7"
+                    android:text="TextView"
+                    android:textColor="#FEFEFE"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.93"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <Button
+                    android:id="@+id/settings_btn"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:alpha="0"
+                    android:text="Button"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.428" />
+
+                <Button
+                    android:id="@+id/search_button"
+                    android:layout_width="29dp"
+                    android:layout_height="24dp"
+                    android:alpha="0"
+                    android:text=""
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.746"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.65" /><![CDATA[
+
+
+
+                app:layout_constraintHorizontal_bias="0.912"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.785" />
+
+
+            ]]>
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/listViewLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0">
+
+                <android.support.design.widget.TabItem
+                    android:id="@+id/tabItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Чаты" />
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Контакты" />
+            </android.support.design.widget.TabLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

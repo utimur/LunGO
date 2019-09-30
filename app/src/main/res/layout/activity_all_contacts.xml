@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/cont_find"
+    tools:context=".AllContactsActivity">
+
+    <LinearLayout
+        android:id="@+id/all_cont_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/search_contacts_edittext"
+            android:layout_width="320dp"
+            android:layout_height="38dp"
+            android:layout_marginLeft="12dp"
+            android:background="@android:color/transparent"
+            android:hint="@string/ET_search_contact"
+            android:inputType="textPersonName"
+            android:textSize="18sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="21dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rw_all_contacts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

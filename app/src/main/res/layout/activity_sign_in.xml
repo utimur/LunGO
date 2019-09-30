@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sign_in"
+    tools:context=".SignInActivity">
+
+
+
+    <Button
+        android:id="@+id/button_sign_in"
+        android:layout_width="185dp"
+        android:layout_height="81dp"
+        android:alpha="0"
+        android:text="@string/sign_in_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.846" />
+
+    <EditText
+        android:id="@+id/sign_username"
+        android:layout_width="171dp"
+        android:layout_height="44dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:hint="login"
+        android:inputType="textEmailAddress"
+        android:textColorHint="#CFCFCF"
+        android:textColorLink="#DCDCDC"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.675"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.484" />
+
+    <EditText
+        android:id="@+id/sign_password"
+        android:layout_width="170dp"
+        android:layout_height="38dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:textColorHint="#CFCFCF"
+        android:textColorLink="#DCDCDC"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.672"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.565" />
+
+    <Button
+        android:id="@+id/textView3"
+        android:layout_width="160dp"
+        android:layout_height="36dp"
+        android:alpha="0"
+        android:text="@string/forget_password_label"
+        android:textColor="@color/colorPrimary"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.635" />
+
+    <Button
+        android:id="@+id/button_reg"
+        android:layout_width="105dp"
+        android:layout_height="38dp"
+        android:alpha="0"
+        android:text="@string/registration_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.647"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.346" />
+    <LinearLayout
+        android:layout_width="89dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="240dp"
+        app:layout_constraintBottom_toTopOf="@+id/sign_password"
+        app:layout_constraintEnd_toStartOf="@+id/sign_password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_username">
+
+        <ProgressBar
+            android:id="@+id/waitingCircle_Progress_Bar"
+            android:layout_width="match_parent"
+            android:layout_height="78dp"
+            android:layout_gravity="center"
+            android:indeterminateDrawable="@xml/ring_action"
+            android:indeterminateOnly="true"
+            android:visibility="invisible"
+            tools:layout_editor_absoluteX="181dp"
+            tools:layout_editor_absoluteY="353dp" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

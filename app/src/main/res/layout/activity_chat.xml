@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="end"
+    tools:context=".ChatActivity">
+
+    <LinearLayout
+        android:id="@+id/llChats"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp">
+
+            <EditText
+                android:id="@+id/chatSearch"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/search_line"
+                android:hint="Найти текст"
+                android:inputType="text"
+                android:paddingLeft="8dp"
+                android:paddingRight="14dp"
+                android:paddingBottom="2dp"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/friend_avatar_chat"
+                app:layout_constraintTop_toBottomOf="@+id/friend_nickname_label" />
+
+            <TextView
+                android:id="@+id/friend_nickname_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:maxWidth="150dp"
+                android:text="TextView"
+                android:textColor="#DA316F"
+                android:textSize="20dp"
+                android:typeface="normal"
+                app:layout_constraintStart_toEndOf="@+id/friend_avatar_chat"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/friend_avatar_chat"
+                android:layout_width="73dp"
+                android:layout_height="73dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:elevation="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/default_avatar" />
+
+            <TextView
+                android:id="@+id/friend_status_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/friend_nickname_label"
+                app:layout_constraintEnd_toStartOf="@+id/button_add_contacts"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/friend_nickname_label"
+                app:layout_constraintTop_toTopOf="@+id/friend_nickname_label" />
+
+            <Button
+                android:id="@+id/button_add_contacts"
+                android:layout_width="55dp"
+                android:layout_height="65dp"
+                android:alpha="255"
+                android:background="@drawable/logo_chat"
+                android:elevation="4dp"
+                android:text=""
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+        </android.support.constraint.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/LV_PRINT_AllMassages"
+                android:layout_width="match_parent"
+                android:layout_height="547dp"
+                android:layout_weight="1"
+                android:background="@drawable/chat_field_xml"
+                android:paddingLeft="9dp"
+                android:paddingRight="9dp"
+                android:stackFromBottom="true"
+                android:transcriptMode="alwaysScroll">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonDownloadImage"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="left"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/add_res_btn"
+                    android:shadowColor="#000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="4" />
+
+                <!--<Button
+                android:id="@+id/listen_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/listen_voice" />-->
+
+                <EditText
+                    android:id="@+id/ET_MASSAGE_LL"
+                    android:layout_width="113dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxHeight="92dp"
+                    android:background="@drawable/edit_text_chat"
+                    android:hint="Введите сообщение"
+                    android:layout_gravity="center"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="6dp"
+                    android:textSize="18sp" />
+
+                <Button
+
+                    android:id="@+id/voice_recognition_button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:alpha="255"
+                    android:background="@drawable/mic" />
+
+                <Button
+
+                    android:id="@+id/button_LL_sandmassage"
+                    android:layout_weight="0"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

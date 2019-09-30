@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cont_cl"
+    android:layout_width="360dp"
+    android:layout_height="82dp"
+    android:background="@drawable/line"
+    android:layout_gravity="center_horizontal"
+    tools:layout_editor_absoluteY="81dp">
+
+    <TextView
+        android:id="@+id/username_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/lungoText"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.01"
+        app:layout_constraintStart_toEndOf="@+id/status_label"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.163" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/avatar_view"
+        android:layout_width="63dp"
+        android:layout_height="63dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.64"
+        app:srcCompat="@drawable/default_avatar" />
+
+    <ImageView
+        android:id="@+id/status_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/ring"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.74" />
+
+    <TextView
+        android:id="@+id/on_off_status_label"
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="52dp"
+        android:text="TextView"
+        android:textSize="14sp"
+        android:textColor="@color/lungoText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.507" />
+
+    <TextView
+        android:id="@+id/info_status_label"
+        android:layout_width="146dp"
+        android:layout_height="21dp"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.388"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.737" />
+
+    <TextView
+        android:id="@+id/no_read_label"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/notify"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.51" />
+
+</android.support.constraint.ConstraintLayout>

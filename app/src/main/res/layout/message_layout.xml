@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/message_cl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="4dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/mess_username_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/lungoText"
+        android:textSize="0dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"/>
+
+    <LinearLayout
+        android:id="@+id/v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/krugliye_ugli"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/message_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:paddingRight="12dp"
+            android:paddingLeft="12dp"
+            android:paddingBottom="8dp"
+            android:maxWidth="200dp"
+            android:text="safasfas"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="13:37"
+        android:textColor="@color/lungoTextDark"
+        android:textSize="12sp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/message_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</LinearLayout>

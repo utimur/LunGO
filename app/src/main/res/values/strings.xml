@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">mas</string>
+    <string name="hintOfEditTextMassage">Введите сообщение</string>
+    <string name="button_LL_sandmass">Отправить сообщение</string>
+    <string name="sign_in_button">Sign In</string>
+    <string name="username_label">Enter email</string>
+    <string name="password_label">Enter password</string>
+    <string name="forget_password_label">Forget password?</string>
+    <string name="don_t_have_an_account_label">don\'t have an account?</string>
+    <string name="registration_button">Registration</string>
+    <string name="email_adress_label">Enter email adress</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="log_out_item">log out</string>
+    <string name="BT_reset_password">Сменить пароль</string>
+    <string name="ET_press_code">Введите код</string>
+    <string name="BT_sand_code_from_email">Отправить код</string>
+    <string name="chats_label">Чаты</string>
+    <string name="Contacts_label">Контакты</string>
+    <string name="voice_recognition_button">Запись</string>
+    <string name="listen_voice">Слух</string>
+    <string name="search_contact">Поиск контакта</string>
+    <string name="ET_search_contact">Введите имя пользователя</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+</resources>
