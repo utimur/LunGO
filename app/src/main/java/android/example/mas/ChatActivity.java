@@ -100,7 +100,6 @@ import static android.example.mas.MainActivity.getRealPathFromURI;
 
 public class ChatActivity extends AppCompatActivity {
 
-
     static final int GALLERY_REQUEST = 1;
     static final int AUDIO_REQUEST_CODE = 123;
     String myName;
@@ -121,10 +120,7 @@ public class ChatActivity extends AppCompatActivity {
     Button sandMass;
     ArrayList<Message> massage = new ArrayList<>();
     String friendID;
-    String friendIDforEugene;
-   //ListView print_massages;
     RecyclerView print_massages;
-    RecyclerMassageAdapter.RecyclerMassageHolder messageHolder;
     LinearLayout llChat;
     static TextView friendNickname;
     TextView friendStatus;
@@ -132,16 +128,14 @@ public class ChatActivity extends AppCompatActivity {
     Button addContact;
     static User friendUser;
     DatabaseReference myUserDB;
-// Создание объектов для записи голосовых сообщений
+    // Создание объектов для записи голосовых сообщений
     Button recordbutton;
     MediaRecorder recorder;   // Библиотека аудио-сообщений
     String fileName;
     String fileOfName;
     String FileName123;
-// Объект для прослушаивания голосовых сообщений
+    // Объект для прослушаивания голосовых сообщений
     private MediaPlayer   player = null;
-    //Button voiceBT;
-    //int voiceBTincr=1;
     // Кнопка для загрузки изображений в чат
     Button downloadImageInChat;
 
@@ -149,25 +143,17 @@ public class ChatActivity extends AppCompatActivity {
     EditText searchChat;
     RecyclerMassageAdapter searchAdapter;
     ArrayList<Message> searchList;
-
     ArrayList<String> groupChatContactList;
     ArrayList<User> userContactList;
 
-    private boolean isPause = false;
-
-
     private static final String LOG_TAG = "Record log";
     private StorageReference mStorageRef;   // Хранилище данных
-
-
-
     // FCM
 
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
     final private String serverKey = "key=" + "AAAAT0HP0zA:APA91bElz2H28KldQuR0PPXW6IKd_E9bcosqJo4JHpypwwZxpSJxuP-aG5H9tjoY6yl3wcr0bIOTb3zZQDt3IGCHX1oFsnVmhtx5w9-0VqvQStiORZ-uQaSSt_nAgzepvHGcgBTJ1N_I";
     final private String contentType = "application/json";
     final String TAG = "NOTIFICATION TAG";
-
 
     String NOTIFICATION_TITLE;
     String NOTIFICATION_MESSAGE;
@@ -179,23 +165,15 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        //getCurrentTimeFromFirebaseServerFast(this);
-
         // Если активити единственное в стеке - вызвать этот метод(в нём будет взято время с сервера, чтобы при открытии уведомлений не сломать бд)
         checkToLastActivity();
 
-        //getCurrentTimeFromFirebaseServerFast(this);
-
-
-
         mSettings = getSharedPreferences(APP_PREFERENCES,Context.MODE_PRIVATE);
 
-      //  Log.d("Zheka","hi");
         // Инициализация обьектов
         countNoReadMessage = "0";
         myDb = new DataBase(ChatActivity.this);
         myRef = database.getReference("users");
-      //  messageAdapter = new MessageAdapter(massage,ChatActivity.this);
         llChat = findViewById(R.id.llChats);
         Intent intChat = getIntent();
         mAuth = FirebaseAuth.getInstance();
@@ -215,26 +193,14 @@ public class ChatActivity extends AppCompatActivity {
         friendStatus = findViewById(R.id.friend_status_label);
         friendAvatar =findViewById(R.id.friend_avatar_chat);
         addContact = findViewById(R.id.button_add_contacts);
-        // final ArrayAdapter<String> adaptaer_massage = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, massage);
-        Intent intChat2 = getIntent();
-        String friendID2 = intChat2.getStringExtra("id");
         Intent intUser = getIntent();
         friendUser = intUser.getParcelableExtra("user");
-
-
-        if (friendUser == null)
-            Log.d("Zheka", "friendUser is null");
-        else {
-           // Log.d("Zheka", "friendUser is not null");
-            Log.d("Zheka", "info about friendUser " + friendUser.getUsername() + friendUser.getId() + " path: " + friendUser.getAvatarPuth());
-        }
-
 
         if (friendUser != null) {
             friendID = friendUser.getId();
         }
         else friendID = intChat.getStringExtra("id");
-        Log.d("GroupChatsLog", "friendIdBeforeAdapter" + friendID);
+
         messageAdapter = new RecyclerMassageAdapter(massage,ChatActivity.this,friendID);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
@@ -245,10 +211,8 @@ public class ChatActivity extends AppCompatActivity {
         fileName= Environment.getExternalStorageDirectory().getAbsolutePath();
         fileOfName = UUID.randomUUID().toString() + ".3gp";
         fileName+="/" + fileOfName;
-        // voiceBT = findViewById(R.id.listen_voice);
 
         friendStatus.setText(friendUser.getStatus());
-        Log.d("GroupChatsLog", friendUser.getStatus() + "");
         downloadImageInChat = findViewById(R.id.buttonDownloadImage);
         groupChatContactList = new ArrayList<>();
 
@@ -260,17 +224,7 @@ public class ChatActivity extends AppCompatActivity {
         searchAdapter = new RecyclerMassageAdapter(searchList,this,friendID);
         searchChat.addTextChangedListener(Search);
 
-
-
-
-
-
-
-
-
-
         // Нажатие на кнопку "скрепка" для загрузки изображения в чат.
-
         downloadImageInChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -278,11 +232,8 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-
-
         // если групповой чат
         if (friendUser.getIsGroupChat().equals("1")) {
-
             groupChatLoad();
             groupChatAvatarClick();
             sandMassClickGroupChat();
@@ -293,9 +244,8 @@ public class ChatActivity extends AppCompatActivity {
             getUserContactList();
             checkChangeOfAvatar();
         }
-
-        if(friendUser.getIsGroupChat().equals("0")) { // Если одиночный
-
+        // Если одиночный
+        if(friendUser.getIsGroupChat().equals("0")) {
             myRefUser1 = database.getReference("users").child(user.getUid()).child("chats").child(friendID).child("message");
             myRefUser2 = database.getReference("users").child(friendID).child("chats").child(user.getUid()).child("message");
             avatarDownload();
@@ -312,17 +262,8 @@ public class ChatActivity extends AppCompatActivity {
             lungoChatButtonClick();
             checkChangeOfAvatar();
         }
-
-
-
-
-
-     //   Log.d("Zheka","end");
         recordButtonOnClick();
-
-
         value_of_massage.addTextChangedListener(new TextWatcher(){
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -333,21 +274,16 @@ public class ChatActivity extends AppCompatActivity {
 
                 { if(s.toString().trim().length()==0){
                     recordbutton.setBackgroundResource(R.drawable.mic);
-
-                    } else {
-                        recordbutton.setBackgroundResource(R.drawable.button_go);
-
-                    }
+                } else {
+                    recordbutton.setBackgroundResource(R.drawable.button_go);
                 }
-
+                }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
             }
         });
-
     }
 
     // Срабатывание кнопки записи голосового сообщения
@@ -385,7 +321,6 @@ public class ChatActivity extends AppCompatActivity {
 
     // Устанавливает название конференции-чата.
     private void friendGroupNicknameSetText() {
-
         friendNickname.setText(friendUser.getUsername());
     }
 
@@ -427,14 +362,9 @@ public class ChatActivity extends AppCompatActivity {
                     return;
                 } else if (value_of_massage.getText().length() < 500) // Отправка сообщения
                 {
-
                     String currentTimeFromServer = getServerTimeRightNow(ChatActivity.this);
-
                     // Убрать комментарии, если дата будет браться правильно.
                     String date = mSettings.getString("currentDate","");
-                    //String date = DateTime.getDate();
-
-
                     if (massage.size() > 1) {
                         if (DateTime.dateCompare(date, massage.get(massage.size() - 1).getDate()) == true) {
                             String msg = user.getUid()+currentTimeFromServer +"read1" + "flag3"  +date + "";
@@ -451,7 +381,6 @@ public class ChatActivity extends AppCompatActivity {
                     groupChatsRef.child(friendUser.getId()).child("contacts").addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                            //   Log.d("GroupChatsLog",dataSnapshot.getKey());
                             if (!dataSnapshot.getKey().equals(user.getUid())) {
                                 fcmNotificationPart1(myName + "(" + friendUser.getUsername() + ")", valueForNotification, dataSnapshot.getKey(), friendUser.getId());
                             }
@@ -477,10 +406,6 @@ public class ChatActivity extends AppCompatActivity {
 
                         }
                     });
-
-
-
-
                 } else
                     Toast.makeText(getApplicationContext(), "Слишком длинное сообщение", Toast.LENGTH_SHORT).show();
                 value_of_massage.setText("");
@@ -493,7 +418,6 @@ public class ChatActivity extends AppCompatActivity {
         String lastMessDate = DateTime.getDateTime();
         if (!currentTimeFromServer.equals(""))
             currentTimeFromServer = lastMessDate.substring(0,6) + currentTimeFromServer + lastMessDate.substring(11);
-   //     Log.d("Zheka", "LastMess = " + currentTimeFromServer);
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("users");;
         groupChatsRef.child(friendUser.getId()).child("lastmessagedate").setValue(currentTimeFromServer);
@@ -518,9 +442,7 @@ public class ChatActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
                         msg.setMsgUsername(dataSnapshot1.getValue(String.class));
                         messageAdapter.notifyDataSetChanged();
-
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -530,13 +452,10 @@ public class ChatActivity extends AppCompatActivity {
                 massage.add(msg);
                 messageAdapter.notifyDataSetChanged();
                 print_massages.smoothScrollToPosition(massage.size());
-
             }
-
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
             }
-
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 Message msg = new Message();
@@ -553,14 +472,11 @@ public class ChatActivity extends AppCompatActivity {
                     if (masSearch.equals(msgText)) {
                         massage.remove(i);
                         messageAdapter.notifyDataSetChanged();
-                        //Toast.makeText(ChatActivity.this, "Удалён", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
                 print_massages.smoothScrollToPosition(massage.size());
-
             }
-
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
             }
@@ -585,24 +501,19 @@ public class ChatActivity extends AppCompatActivity {
 
                     String currentTimeFromServer = getServerTimeRightNow(ChatActivity.this);
                     fcmNotificationPart1(myName,value_of_massage.getText().toString(),friendID,user.getUid());
-                    // Добавление сообщений в бд обоим пользователям
-
-
-
                     // Добавление даты
                     String date = mSettings.getString("currentDate","");
-                    //String date = DateTime.getDate();
                     if (massage.size() > 1) {
                         if (DateTime.dateCompare(date, massage.get(massage.size() - 1).getDate()) == true) {
-                           String msg = user.getUid()+currentTimeFromServer +"read1" + "flag3"  +date + "";
+                            String msg = user.getUid()+currentTimeFromServer +"read1" + "flag3"  +date + "";
                             myRefUser1.push().setValue(msg);
                             myRefUser2.push().setValue(msg);
                         }
                     }
                     if (massage.size() == 0) {
-                            String msg = user.getUid()+currentTimeFromServer +"read1" + "flag3"  +date + "";
-                            myRefUser1.push().setValue(msg);
-                            myRefUser2.push().setValue(msg);
+                        String msg = user.getUid()+currentTimeFromServer +"read1" + "flag3"  +date + "";
+                        myRefUser1.push().setValue(msg);
+                        myRefUser2.push().setValue(msg);
                     }
 
                     myRefUser1.push().setValue(user.getUid()+currentTimeFromServer +"read1" + "flag0"  +date +  value_of_massage.getText().toString() );
@@ -672,7 +583,6 @@ public class ChatActivity extends AppCompatActivity {
                     if (masSearch.equals(msgText)) {
                         massage.remove(i);
                         messageAdapter.notifyDataSetChanged();
-                        //Toast.makeText(ChatActivity.this, "Удалён", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
@@ -690,10 +600,6 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    /** Start audio recording
-     *   for voice messages
-     */
-
     private void startRecording(String FileName) {
         String fileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + this.getPackageName() +"/" +friendID + "/"  +  FileName;
         recorder = new MediaRecorder();
@@ -701,19 +607,13 @@ public class ChatActivity extends AppCompatActivity {
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         recorder.setOutputFile(fileName);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
         try {
             recorder.prepare();
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
         }
-
         recorder.start();
     }
-
-    /**
-     * Stop recording
-     */
 
     private void stopRecording(final String FileName) {
         recorder.stop();
@@ -746,7 +646,6 @@ public class ChatActivity extends AppCompatActivity {
                                     putLastMessageAndHisTime(user.getUid(), friendID, currentTimeFromServer, "Голосовое сообщение");
                                     fcmNotificationPart1(myName,"Голосовое сообщение",friendID,user.getUid());
 
-                                    //String date = DateTime.getDate();
                                     String date = mSettings.getString("currentDate","");
                                     if (massage.size() > 1) {
                                         if (DateTime.dateCompare(date, massage.get(massage.size() - 1).getDate()) == true) {
@@ -779,9 +678,7 @@ public class ChatActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        Log.d("GroupChatsAudio","resultTrue");
                         String currentTimeFromServer = getServerTimeRightNow(ChatActivity.this);
-                        //String date = DateTime.getDate();
                         String date = mSettings.getString("currentDate","");
                         if (massage.size() > 1) {
                             if (DateTime.dateCompare(date, massage.get(massage.size() - 1).getDate()) == true) {
@@ -829,8 +726,6 @@ public class ChatActivity extends AppCompatActivity {
 
                             }
                         });
-
-
                         putLastMessageAndHisTimeForChat(user.getUid(), friendID, currentTimeFromServer, "Голосовое сообщение");
                     }
                 }
@@ -838,12 +733,6 @@ public class ChatActivity extends AppCompatActivity {
         });
 
     }
-
-    /**
-     * Playing voice messages
-     */
-
-
 
     protected void startPlaying(String NameOfFile) {
         player = new MediaPlayer();
@@ -903,27 +792,17 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * loading a friend's avatar
-     */
-
     private void avatarDownload() {
         friendAvFile = new File(friendUser.getAvatarPuth());
-
-       if(friendAvFile.length() != 0 || friendAvFile.exists())
-       {
-           friendAvatar.setImageURI(Uri.parse(friendAvFile.getAbsolutePath()));
-
-       }
-       else {
-           Log.d("Zheka","file not exist");
-           friendAvatar.setImageResource(R.drawable.default_avatar);
-       }
+        if(friendAvFile.length() != 0 || friendAvFile.exists())
+        {
+            friendAvatar.setImageURI(Uri.parse(friendAvFile.getAbsolutePath()));
+        }
+        else {
+            friendAvatar.setImageResource(R.drawable.default_avatar);
+        }
     }
 
-    /**
-     * Processing clicking on "skrepka"
-     */
     protected void onScrepkaClick()
     {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
@@ -931,49 +810,46 @@ public class ChatActivity extends AppCompatActivity {
         startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
     }
 
-    /**
-     *     Return image from gallery
-     */
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
         Bitmap bitmap = null;
         switch(requestCode) {
 
             case GALLERY_REQUEST + 1:
-                        if(resultCode == RESULT_OK){
-                            final File file = new File(Environment.getExternalStorageDirectory() + "/Android/data/" + this.getPackageName() + "/" + friendUser.getId() + "/" +"avatar");
-                            Uri selectedImage = imageReturnedIntent.getData();
-                            bitmap = MainActivity.decodeSampledBitmapFromResource(MainActivity.getRealPathFromURI(this,selectedImage), 300,300);
-                            friendAvatar.setImageBitmap(bitmap);
-                            friendUser.setAvatarPuth(file.getAbsolutePath());
-                            ChatFragment.chatHolderAdapter.notifyDataSetChanged();
-                            try {
-                                FileOutputStream fos = null;
-                                try {
-                                    fos = new FileOutputStream(file);
-                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                                } finally {
-                                    if (fos != null) fos.close();
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            final String nameOfAvatar = UUID.randomUUID().toString();
-                            mStorageRef.child(friendUser.getId()).child("avatar").putFile(Uri.parse(convertToFileURL(file.getAbsolutePath()))).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                    if (task.isSuccessful())
-                                    {
-                                        groupChatsRef.child(friendUser.getId()).child("avatar").setValue(nameOfAvatar);
-                                        Toast.makeText(ChatActivity.this, "Аватарка успешно загружена!", Toast.LENGTH_SHORT).show();
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(ChatActivity.this, "Во время загрузки аватара произошла ошибка, попробуйте снова.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                if(resultCode == RESULT_OK){
+                    final File file = new File(Environment.getExternalStorageDirectory() + "/Android/data/" + this.getPackageName() + "/" + friendUser.getId() + "/" +"avatar");
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    bitmap = MainActivity.decodeSampledBitmapFromResource(MainActivity.getRealPathFromURI(this,selectedImage), 300,300);
+                    friendAvatar.setImageBitmap(bitmap);
+                    friendUser.setAvatarPuth(file.getAbsolutePath());
+                    ChatFragment.chatHolderAdapter.notifyDataSetChanged();
+                    try {
+                        FileOutputStream fos = null;
+                        try {
+                            fos = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                        } finally {
+                            if (fos != null) fos.close();
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    final String nameOfAvatar = UUID.randomUUID().toString();
+                    mStorageRef.child(friendUser.getId()).child("avatar").putFile(Uri.parse(convertToFileURL(file.getAbsolutePath()))).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            if (task.isSuccessful())
+                            {
+                                groupChatsRef.child(friendUser.getId()).child("avatar").setValue(nameOfAvatar);
+                                Toast.makeText(ChatActivity.this, "Аватарка успешно загружена!", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(ChatActivity.this, "Во время загрузки аватара произошла ошибка, попробуйте снова.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
                 break;
             case GALLERY_REQUEST:
                 if(resultCode == RESULT_OK){
@@ -998,10 +874,7 @@ public class ChatActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-
                     final Uri ura=Uri.fromFile(file);
-                    Log.d("GroupChatsLog", " currentPathOfFile " + ura.toString() + " NameOfFile" + FileOfImage);
-
                     if (friendUser.getIsGroupChat().equals("0")) {
                         StorageReference MyStoreUser1 = FirebaseStorage.getInstance().getReference().child(user.getUid()).child("chats").child(friendID).child(FileOfImage);
                         final StorageReference MyStoreUser2 = FirebaseStorage.getInstance().getReference().child(friendID).child("chats").child((user.getUid())).child(FileOfImage);
@@ -1017,8 +890,6 @@ public class ChatActivity extends AppCompatActivity {
 
                                                 putLastMessageAndHisTime(user.getUid(), friendID, currentTimeFromServer, "Изображение");
 
-
-                                                //String date = DateTime.getDate();
                                                 String date = mSettings.getString("currentDate","");
                                                 if (massage.size() > 1) {
                                                     if (DateTime.dateCompare(date, massage.get(massage.size() - 1).getDate()) == true) {
@@ -1055,16 +926,13 @@ public class ChatActivity extends AppCompatActivity {
                     }
                     if(friendUser.getIsGroupChat().equals("1")) {
                         StorageReference groupStorage = FirebaseStorage.getInstance().getReference().child(friendUser.getId()).child("chats").child(FileOfImage);
-                        Log.d("GroupChatsLog", "Зашло в условие");
                         groupStorage.putFile(ura).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                                 if (task.isSuccessful()) {
-                                    Log.d("GroupChatsLog", "Зашло в таск");
                                     String currentTimeFromServer = getServerTimeRightNow(ChatActivity.this);
                                     putLastMessageAndHisTimeForChat(user.getUid(), friendID, currentTimeFromServer, "Изображение");
 
-                                    //String date = DateTime.getDate();
                                     String date = mSettings.getString("currentDate","");
                                     if (massage.size() > 1) {
                                         if (DateTime.dateCompare(date, massage.get(massage.size() - 1).getDate()) == true) {
@@ -1077,7 +945,6 @@ public class ChatActivity extends AppCompatActivity {
 
                                     }
                                     groupChatsRef.child(friendUser.getId()).child("message").push().setValue(mAuth.getCurrentUser().getUid() + currentTimeFromServer + "read1" + "flag2"+date + FileOfImage);              //myRefUser1.push().setValue(user.getUid()+now.hour + ":" + now.minute + value_of_massage.getText().toString() );
-
                                     groupChatsRef.child(friendUser.getId()).child("contacts").addChildEventListener(new ChildEventListener() {
                                         @Override
                                         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -1086,7 +953,6 @@ public class ChatActivity extends AppCompatActivity {
                                                 fcmNotificationPart1(myName + "(" + friendUser.getUsername() + ")", "Изображение", dataSnapshot.getKey(), friendUser.getId());
                                             }
                                         }
-
                                         @Override
                                         public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
@@ -1110,74 +976,58 @@ public class ChatActivity extends AppCompatActivity {
                                 }
                             }
                         });
-
                     }
-
-
                 }
         }
     }
 
+    TextWatcher Search = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-
-    /**
-     *     Search of messages
-     */
-
-TextWatcher Search = new TextWatcher() {
-    @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        if (charSequence.toString().equals(""))
-        {
-            print_massages.setAdapter(messageAdapter);
-            messageAdapter.notifyDataSetChanged();
-            print_massages.smoothScrollToPosition(massage.size());
         }
-        else
-        {
-            searchList.clear();
-            for (i=0; i < massage.size(); i++)
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            if (charSequence.toString().equals(""))
             {
-                String mainLine;
-                if (massage.get(i).getFlag() == 1)
-                    mainLine = "Голосовое сообщение(нажмите, чтобы прослушать)";
-                else if (massage.get(i).getFlag() == 2)
-                    mainLine = "";
-                else mainLine = massage.get(i).getMessage();
-                if ((mainLine.toLowerCase().contains(charSequence.toString().toLowerCase())))
-                {
-                    //Log.d("Zheka", "first =" + charSequence.toString() + " |  second =" + massage.get(i).getMessage().substring(0,charSequence.toString().length()) );
-                    searchList.add(massage.get(i));
-                }
+                print_massages.setAdapter(messageAdapter);
+                messageAdapter.notifyDataSetChanged();
+                print_massages.smoothScrollToPosition(massage.size());
             }
-            print_massages.setAdapter(searchAdapter);
-            searchAdapter.notifyDataSetChanged();
-            print_massages.smoothScrollToPosition(searchList.size());
+            else
+            {
+                searchList.clear();
+                for (i=0; i < massage.size(); i++)
+                {
+                    String mainLine;
+                    if (massage.get(i).getFlag() == 1)
+                        mainLine = "Голосовое сообщение(нажмите, чтобы прослушать)";
+                    else if (massage.get(i).getFlag() == 2)
+                        mainLine = "";
+                    else mainLine = massage.get(i).getMessage();
+                    if ((mainLine.toLowerCase().contains(charSequence.toString().toLowerCase())))
+                    {
+                        searchList.add(massage.get(i));
+                    }
+                }
+                print_massages.setAdapter(searchAdapter);
+                searchAdapter.notifyDataSetChanged();
+                print_massages.smoothScrollToPosition(searchList.size());
+            }
+
         }
 
-    }
+        @Override
+        public void afterTextChanged(Editable editable) {
 
-    @Override
-    public void afterTextChanged(Editable editable) {
+        }
+    };
 
-    }
-};
-
-
-    /**
-     *     Permission's check
-     */
 
     private boolean hasPermissions()
     {
         int audioPermissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
-
-
         if (audioPermissionStatus == PackageManager.PERMISSION_GRANTED) {
             return true;
         } else {
@@ -1187,27 +1037,19 @@ TextWatcher Search = new TextWatcher() {
         return false;
     }
 
-    /**
-     *     Function for creating request to permissions
-     */
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case AUDIO_REQUEST_CODE:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-
                 } else {
-
                 }
                 return;
         }
     }
 
-    /**
-     *  listener clicking on the avatar in group chat
-     */
+
     public void groupChatAvatarClick() {
         friendAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1219,9 +1061,6 @@ TextWatcher Search = new TextWatcher() {
         });
     }
 
-    /**
-     * listener clicking on the avatar in a single chat
-     */
     public void avatarClick()
     {
         if(friendAvFile.length() != 0) {
@@ -1231,29 +1070,19 @@ TextWatcher Search = new TextWatcher() {
         }
     }
 
-
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-            if(massage.size() != 0) {
-                myRef.child(user.getUid()).child("chats").child(friendUser.getId()).child("noread").setValue("0");
-            }
-
+        if(massage.size() != 0) {
+            myRef.child(user.getUid()).child("chats").child(friendUser.getId()).child("noread").setValue("0");
+        }
     }
 
-    /**
-     * A method that receives the number of unread friend messages
-     */
     public void getCountNoReadMessage() {
-
         myRef.child(friendID).child("chats").child(user.getUid()).child("noread").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    countNoReadMessage = dataSnapshot.getValue(String.class);
-
+                countNoReadMessage = dataSnapshot.getValue(String.class);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -1262,9 +1091,6 @@ TextWatcher Search = new TextWatcher() {
         });
     }
 
-    /**
-     * Get server time
-     */
     static String getServerTimeRightNow(Context context)
     {
         Time now = new Time();
@@ -1273,7 +1099,6 @@ TextWatcher Search = new TextWatcher() {
         if (now.minute < 10)
         {
             timeMinute = "0"+now.minute;
-
         }
         else timeMinute="" + now.minute;
         String timeHour ="";
@@ -1282,8 +1107,6 @@ TextWatcher Search = new TextWatcher() {
             timeHour = "0" + now.hour;
         }
         else timeHour ="" + now.hour;
-
-
         SharedPreferences mSettings;
         String currentTimeFromServer;
         mSettings = context.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
@@ -1297,17 +1120,11 @@ TextWatcher Search = new TextWatcher() {
         return currentTimeFromServer;
     }
 
-
-    /**
-     *     Send last message and time of this message to server;
-     */
-
     static void putLastMessageAndHisTime(String userId,String friendID,String currentTimeFromServer, String valueOfMessage)
     {
         String lastMessDate = DateTime.getDateTime();
         if (!currentTimeFromServer.equals(""))
-        currentTimeFromServer = lastMessDate.substring(0,6) + currentTimeFromServer + lastMessDate.substring(11);
-     //   Log.d("Zheka", "LastMess = " + currentTimeFromServer);
+            currentTimeFromServer = lastMessDate.substring(0,6) + currentTimeFromServer + lastMessDate.substring(11);
 
         if (!friendID.substring(friendID.length() - 9).equals("groupchat")) {
             DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("users");
@@ -1326,9 +1143,7 @@ TextWatcher Search = new TextWatcher() {
         }
     }
 
-    /**
-     * Sending notifications
-     */
+
     void fcmNotificationPart1(String title,String message,String idToNotification,String myId)
     {
         TOPIC = "/topics/notification_"+idToNotification; //topic must match with what the receiver subscribed to
@@ -1344,18 +1159,13 @@ TextWatcher Search = new TextWatcher() {
         {
             String lengthOfAvatarPath = Environment.getExternalStorageDirectory() + "/Android/data/" + this.getPackageName() + "/" + friendUser.getId() + "/";
             nameOfAvatarFile = friendUser.getAvatarPuth().substring(friendUser.getAvatarPuth().length()- (friendUser.getAvatarPuth().length() - lengthOfAvatarPath.length()));
-           // Log.d("Zheka", "+++++++" +  nameOfAvatarFile);
         }
-     //   String lengthOfAvatarPath = Environment.getExternalStorageDirectory() + "/Android/data/" + this.getPackageName() + "/" + friendUser.getId() + "/";
-     //   String nameOfAvatarFile = lengthOfAvatarPath.substring(pathToAvatar.length() - lengthOfAvatarPath.length());
-
         JSONObject notification = new JSONObject();
         JSONObject notifcationBody = new JSONObject();
         try {
             notifcationBody.put("title", NOTIFICATION_TITLE);
             notifcationBody.put("message", myId + NOTIFICATION_MESSAGE);
             notifcationBody.put("avatarPath",nameOfAvatarFile);
-          //  Log.d("Zheka", "avatarPath ++++ = " + notifcationBody.getString("avatarPath"));
 
             notification.put("to", TOPIC);
             notification.put("data", notifcationBody);
@@ -1365,16 +1175,11 @@ TextWatcher Search = new TextWatcher() {
         sendNotificationFCMpart2(notification);
     }
 
-    /**
-     *     Creating request to FCM system
-     */
     private void sendNotificationFCMpart2(JSONObject notification) {
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i(TAG, "onResponse: " + response.toString());
 
                     }
                 },
@@ -1382,7 +1187,6 @@ TextWatcher Search = new TextWatcher() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(ChatActivity.this, "Request error", Toast.LENGTH_LONG).show();
-                        Log.i(TAG, "onErrorResponse: Didn't work");
                     }
                 }){
             @Override
@@ -1396,9 +1200,6 @@ TextWatcher Search = new TextWatcher() {
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 
-    /**
-     *  Show popupMenu in the group chat
-     */
     private void showGroupChatPopupMenu(View v) {
         Context wrapper = new ContextThemeWrapper(this, R.style.Popup);
         PopupMenu popupMenu = new PopupMenu(wrapper, v);
@@ -1436,30 +1237,17 @@ TextWatcher Search = new TextWatcher() {
         popupMenu.show();
     }
 
-    /**
-     *    Display info about group chat's users;
-     */
-
-
     private void showGroupInfo() {
         Intent intent = new Intent(this, GroupChatInfo.class);
         intent.putExtra("groupuser",(Parcelable) friendUser);
         startActivity(intent);
     }
 
-    /**
-     *     Leave from group chat
-     */
-
     private void leaveGroup() {
         myRef.child(user.getUid()).child("chats").child(friendUser.getId()).removeValue();
         groupChatsRef.child(friendUser.getId()).child("contacts").child(user.getUid()).removeValue();
         finish();
     }
-
-    /**
-     *     Add contact to group chat
-     */
 
     private void addContactGroupChat() {
         Intent intent = new Intent(this, NewGroupContactActivity.class);
@@ -1469,10 +1257,6 @@ TextWatcher Search = new TextWatcher() {
         intent.putExtra("groupid", friendUser.getId());
         startActivity(intent);
     }
-
-    /**
-     *     Display main menu for interacting with group chat
-     */
 
     private void showChatPopupMenu(View v) {
         Context wrapper = new ContextThemeWrapper(this, R.style.Popup);
@@ -1508,28 +1292,17 @@ TextWatcher Search = new TextWatcher() {
         popupMenu.show();
     }
 
-    /**
-     *     Change a name of group chat;
-     */
-
     private void changeGroupName() {
         Intent intent = new Intent(this, ChangeGroupNameActivity.class);
         intent.putExtra("userchat", (Parcelable) friendUser);
         startActivity(intent);
     }
 
-
-    /**
-     *     Delete all messages from chat;
-     */
-
     private void clearChat() {
         massage.clear();
         myRefUser1.removeValue();
         myRefUser1.push().setValue("9JqWaOeX9GgmIT3VYFBwbxPLC0K218:09read1flag0");
     }
-
-
 
     private void getUserContactList() {
         new DataBase(this).getContacts(userContactList);
@@ -1562,61 +1335,47 @@ TextWatcher Search = new TextWatcher() {
 
             }
         });
-
     }
 
-
-    /**
-     *     If you stop your activity, TTS(Text to speech) will be stoped;
-     */
-
-   @Override
-   protected void onStop() {
-       super.onStop();
-       Log.d("TimLog", "сработал стоп ChatActivity");
-       Log.d("Zheka", "сработал стоп ChatActivity");
-       if (RecyclerMassageAdapter.TTS != null)
-       {
-           RecyclerMassageAdapter.TTS.stop();
-       }
-   }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (RecyclerMassageAdapter.TTS != null)
+        {
+            RecyclerMassageAdapter.TTS.stop();
+        }
+    }
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("TimLog", "сработал старт ChatActivity");
         new Thread(new Runnable() {
             @Override
             public void run() {
-                    Log.d("TimLog", "сработал start mainactivity внутри потока");
-                    if (mSettings.getString(MainActivity.ONLINE_PREFERENCE, "").equals("0")) {
-                        myUserDB.child("status").setValue("online");
-                    } else {
-                        myUserDB.child("status").setValue("");
-                    }
+                if (mSettings.getString(MainActivity.ONLINE_PREFERENCE, "").equals("0")) {
+                    myUserDB.child("status").setValue("online");
+                } else {
+                    myUserDB.child("status").setValue("");
                 }
+            }
         }).start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        if(massage.size() != 0) {
+            myRef.child(user.getUid()).child("chats").child(friendUser.getId()).child("noread").setValue("0");
+        }
+        if (mSettings.getString(MainActivity.ONLINE_PREFERENCE, "").equals("0")) {
+            myUserDB.child("status").setValue(DateTime.getDateTime());
+        } else {
+            myUserDB.child("status").setValue("");
+        }
 
-        isPause = true;
-
-       Log.d("TimLog", "сработал pause ChatActivity");
-       if(massage.size() != 0) {
-           myRef.child(user.getUid()).child("chats").child(friendUser.getId()).child("noread").setValue("0");
-       }
-       if (mSettings.getString(MainActivity.ONLINE_PREFERENCE, "").equals("0")) {
-           myUserDB.child("status").setValue(DateTime.getDateTime());
-       } else {
-           myUserDB.child("status").setValue("");
-       }
-
-       if (RecyclerMassageAdapter.TTS != null)
-       {
-           RecyclerMassageAdapter.TTS.stop();
-       }
+        if (RecyclerMassageAdapter.TTS != null)
+        {
+            RecyclerMassageAdapter.TTS.stop();
+        }
     }
 
     @Override
@@ -1627,8 +1386,6 @@ TextWatcher Search = new TextWatcher() {
         if(taskList.get(0).numActivities == 1 &&
                 taskList.get(0).topActivity.getClassName().equals(this.getClass().getName()))
         {
-            Log.d("Zheka","lastActivity");
-           // Log.d("Zheka", getSupportFragmentManager().getFragments().size() + "");
             User myUser = new User();
             Intent intent = new Intent(this, MainActivity.class);
             myUser.setMail(user.getEmail());
@@ -1639,18 +1396,12 @@ TextWatcher Search = new TextWatcher() {
         }
         else {
             super.onBackPressed();
-            Log.d("Zheka", "notLastActivity");
         }
     }
-
-    /**
-     *     Get current time from Firebase Server without additional requests
-     */
 
 
     static void getCurrentTimeFromFirebaseServerFast(Context context)
     {
-        Log.d("Zheka","startCallTimeFromFirebase");
         final SharedPreferences mSettings = context.getSharedPreferences(APP_PREFERENCES,Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = mSettings.edit();
         readData(new MyCallback() {
@@ -1658,27 +1409,15 @@ TextWatcher Search = new TextWatcher() {
             public void onCallback(long mills) {
                 Calendar currentDateFromServer = Calendar.getInstance();
                 long calendarMills = currentDateFromServer.getTimeInMillis();
-                Log.d("Zheka", currentDateFromServer.getTime() + "");
-             //   Log.d("Zheka", "" + mills);
                 currentDateFromServer.setTimeInMillis(mills);
-             //   Log.d("Zheka", calendarMills + " vs " + mills);
-                Log.d("Zheka","Время с сервера: " + currentDateFromServer.getTime() + "");
-
-
                 TimeZone mTimeZone = currentDateFromServer.getTimeZone();
                 // Московский часовой пояс
                 int mskGMT = TimeZone.getTimeZone("Europe/Moscow").getOffset(mills);
                 // Часовой пояс пользователя
                 int mGMTOffset = mTimeZone.getOffset(mills);
-               // Log.d("Zheka", mGMTOffset + " ");
-               // if (mGMTOffset <=0)
-               //     mGMTOffset += 3600000;
                 // Приведение часового пояса к стандартному
                 int resultGMT = mskGMT - mGMTOffset;
                 currentDateFromServer.setTimeInMillis(mills + resultGMT);
-                //Log.d("Zheka", "Result time = " + currentDateFromServer.getTime() + "");
-               // Log.d("Zheka", mGMTOffset + " ");
-               // Log.d("Zheka","GMT offset is " +  TimeUnit.HOURS.convert(mGMTOffset, TimeUnit.MILLISECONDS) +  "  hours");
                 // может быть придётся увеличить день месяца на 1.
                 String currentDate;
                 String month;
@@ -1693,28 +1432,14 @@ TextWatcher Search = new TextWatcher() {
                 }
                 else day = "" + currentDateFromServer.get(Calendar.DAY_OF_MONTH);
                 currentDate = day +"." + month;
-                Log.d("Zheka", "currentDate = " + currentDate);
                 editor.putString("currentDate",currentDate);
-                Log.d("Zheka", "current date from Server =   " +  currentDate);
-
-
-              //  Log.d("Zheka", currentDateFromServer.get(Calendar.HOUR_OF_DAY) + ":" + currentDateFromServer.get(Calendar.MINUTE));
-              //  Log.d("Zheka", currentDateFromServer.getTime() + "");
-                // Log.d("Zheka", currentDateFromServer.toString());
                 String currentTime = DateTime.getTime_Hour_And_Minute(currentDateFromServer.get(Calendar.HOUR_OF_DAY),currentDateFromServer.get(Calendar.MINUTE));
-                Log.d("Zheka", currentTime);
                 editor.putString(APP_PREFERENCES_TIME,currentTime);
                 editor.putString(APP_PREFERENCES_DifferenceInTime,MainActivity.checkDifference(currentTime));
                 editor.apply();
             }
         });
     }
-
-
-    /**
-     *     This function will get time from Server, if your activity is last (will work after opening application by notification)
-     */
-
 
     void checkToLastActivity()
     {
@@ -1724,7 +1449,6 @@ TextWatcher Search = new TextWatcher() {
         if(taskList.get(0).numActivities == 1 &&
                 taskList.get(0).topActivity.getClassName().equals(this.getClass().getName()))
         {
-            Log.d("Zheka","lastActivity");
             getCurrentTimeFromFirebaseServerFast(this);
         }
     }
@@ -1732,14 +1456,7 @@ TextWatcher Search = new TextWatcher() {
     @Override
     protected void onResume() {
         super.onResume();
-     //   if (isPause)
-     //   getCurrentTimeFromFirebaseServerFast(this);
     }
-
-
-    /**
-     *     Start work only after getting information from database ( no null point exceptions)
-     */
 
     static void readData(final MyCallback myCallback)
     {
@@ -1768,12 +1485,6 @@ TextWatcher Search = new TextWatcher() {
         void onCallback(long mills);
     }
 
-
-
-    /**
-     *     Start working after changing of user's avatar
-     */
-
     void checkChangeOfAvatar()
     {
         DatabaseReference databaseReference;
@@ -1785,13 +1496,11 @@ TextWatcher Search = new TextWatcher() {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("Zheka","Avatar is changed!");
 
                 String lengthOfAvatarPath = Environment.getExternalStorageDirectory() + "/Android/data/" + ChatActivity.this.getPackageName() + "/" + friendUser.getId() + "/";
                 String nameOfAvatarFile = friendUser.getAvatarPuth().substring(friendUser.getAvatarPuth().length()- (friendUser.getAvatarPuth().length() - lengthOfAvatarPath.length()));
                 if (!dataSnapshot.getValue(String.class).equals(nameOfAvatarFile))
                 {
-                    Log.d("Zheka","avatar of friendly user is refreshed!");
                     String newAvatarNameFromDatabase = dataSnapshot.getValue(String.class);
                     if (newAvatarNameFromDatabase.equals(""))
                         newAvatarNameFromDatabase = "nothingFile";
@@ -1803,34 +1512,21 @@ TextWatcher Search = new TextWatcher() {
                             public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
                                 if (task.isSuccessful())
                                 {
-                                    Log.d("Zheka","changing of Avatar is successful");
                                     friendAvatar.setImageURI(null);
                                     friendAvatar.setImageURI(Uri.fromFile(newAvatarFile));
                                 }
                                 else
                                 {
-                                    Log.d("Zheka", "changing of Avatar is not successful");
                                     friendAvatar.setImageURI(null);
                                     friendAvatar.setBackgroundResource(R.drawable.default_avatar);
                                 }
                             }
                         });
-
-                        // !!!!! Может быть придётся вернуть
-                   //     mStorageRef.child(friendUser.getId()).child("avatar").getFile(newAvatarFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                   //         @Override
-                   //         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                   //             Log.d("Zheka","changing of Avatar is successful");
-                   //             friendAvatar.setImageURI(null);
-                   //             friendAvatar.setImageURI(Uri.fromFile(newAvatarFile));
-                   //         }
-                   //     });
                     }
                     else
                     {
                         friendAvatar.setImageURI(null);
                         friendAvatar.setImageURI(Uri.parse(newAvatarFile.getAbsolutePath()));
-                        Log.d("Zheka", "new avatar is already downloaded, his path is " + newAvatarFile.getAbsolutePath());
                     }
 
                 }
@@ -1842,10 +1538,4 @@ TextWatcher Search = new TextWatcher() {
             }
         });
     }
-
-
-
-
 }
-
-
